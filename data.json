@@ -1,5 +1,6 @@
 {
-   "Read Kana": true,
+   "Read Kana": false,
    "Solve Python Problem": true,
-   "Learn 10 Words": true
+   "Learn 10 Words": false,
+   "last save": "2026-06-27 09:18:55.492880"
 }
