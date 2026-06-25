@@ -2,16 +2,21 @@ import json
 
 
 def menu():
-    print(
-        "Today's missions\n\n1.[ ] Read Kana\n2.[ ] Solve Python Problem\n3.[ ] Learn 10 Words\n4.Exit"
-    )
+
     baza = {"Read Kana": False, "Solve Python Problem": False, "Learn 10 Words": False}
     while True:
+        try:
+            with open("data.json", "r") as f:
+                baza = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            pass
+
         for i in baza:
             if baza[i] == True:
                 print(f"[✔] {i}")
             else:
                 print(f"[ ] {i}")
+
         try:
             czyg = int(input("Which did you did?"))
             if czyg == 4:
@@ -25,6 +30,9 @@ def menu():
         except ValueError:
             print("Enter a number")
             pass
+        zapis = json.dumps(baza, indent=3)
+        with open("data.json", "w") as f:
+            f.write(zapis)
 
 
 menu()
