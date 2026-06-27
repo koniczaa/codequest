@@ -13,7 +13,13 @@ def menu():
         "Japanese Listening": False,
         "xp": 0,
     }
-
+    exp_values = {
+        "Read Kana": 30,
+        "Solve Python Problem": 50,
+        "Learn 10 Words": 40,
+        "Read Japanese Pages": 100,
+        "Japanese Listening": 80,
+    }
     format = "%Y-%m-%d %H:%M:%S.%f"
     baza["last save"] = str(datetime.datetime.today())
     date = datetime.datetime.strptime(baza["last save"], format)
@@ -29,7 +35,6 @@ def menu():
         if datetime.datetime.now().hour >= 6 and datetime.datetime.now().day > date.day:
             for i in baza:
                 baza[i] = False
-
         for i in baza:
             if i == "last save":
                 continue
@@ -38,25 +43,28 @@ def menu():
             elif baza[i] == False:
                 print(f"[ ] {i}")
             else:
-                print(f"you'r xp is {baza["xp"]}")
+                print(f"your xp is {baza["xp"]}")
 
         try:
             czyg = int(input("Which did you did?"))
-            if czyg == 1:
+            if czyg == 1 and not baza["Read Kana"]:
                 baza["Read Kana"] = True
-                baza["xp"] += 30
-            elif czyg == 2:
+                baza["xp"] += exp_values["Read Kana"]
+            elif czyg == 2 and not baza["Solve Python Problem"]:
                 baza["Solve Python Problem"] = True
-                baza["xp"] += 50
-            elif czyg == 3:
+                baza["xp"] += exp_values["Solve Python Problem"]
+            elif czyg == 3 and not baza["Learn 10 Words"]:
                 baza["Learn 10 Words"] = True
-                baza["xp"] += 40
-            elif czyg == 4:
+                baza["xp"] += exp_values["Learn 10 Words"]
+            elif czyg == 4 and not baza["Read Japanese Pages"]:
                 baza["Read Japanese Pages"] = True
-                baza["xp"] += 100
-            elif czyg == 5:
+                baza["xp"] += exp_values["Read Japanese Pages"]
+            elif czyg == 5 and not baza["Japanese Listening"]:
                 baza["Japanese Listening"] = True
-                baza["xp"] += 80
+                baza["xp"] += exp_values["Japanese Listening"]
+            elif czyg == 6:
+                break
+
             elif czyg == 6:
                 break
         except ValueError:
