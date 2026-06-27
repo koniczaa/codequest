@@ -12,6 +12,7 @@ def menu():
         "Read Japanese Pages": False,
         "Japanese Listening": False,
         "xp": 0,
+        "streak": 0,
     }
     exp_values = {
         "Read Kana": 30,
@@ -35,7 +36,7 @@ def menu():
     format = "%Y-%m-%d %H:%M:%S.%f"
     baza["last save"] = str(datetime.datetime.today())
     date = datetime.datetime.strptime(baza["last save"], format)
-
+    streak = 0
     while True:
         try:
             with open("data.json", "r") as f:
@@ -45,24 +46,35 @@ def menu():
         except (FileNotFoundError, json.JSONDecodeError):
             pass
         if datetime.datetime.now().hour >= 6 and datetime.datetime.now().day > date.day:
+            if (
+                not baza["Read Kana"]
+                and not baza["Solve Python Problem"]
+                and not baza["Learn 10 Words"]
+                and not baza["Read Japanese Pages"]
+                and not baza["Japanese Listening"]
+            ):
+                baza["streak"] = 0
+            else:
+                baza["streak"] += 1
             for i in baza:
-                baza[i] = False
+                if i not in ("xp", "last save", "streak"):
+                    baza[i] = False
+
         for lvl in sorted(levels.keys(), reverse=True):
             if baza["xp"] >= levels[lvl]:
                 print(f"Level {lvl}")
                 break
 
         for i in baza:
-            if i == "last save":
+            if i in ("last save", "streak", "xp"):
                 continue
             if baza[i] == True:
                 print(f"[✔] {i}")
             elif baza[i] == False:
                 print(f"[ ] {i}")
-            else:
-                print(f"your xp is {baza["xp"]}")
-                print(f"your lvl is {lvl}")
-
+        print(f"xp: {baza["xp"]}")
+        print(f"lvl: {lvl}")
+        print(f"streak: {baza["streak"]}")
         try:
             czyg = int(input("Which did you did?"))
             if czyg == 1 and not baza["Read Kana"]:
