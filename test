@@ -1,3 +1,0 @@
-import datetime
-
-czas = datetime.datetime.now()
