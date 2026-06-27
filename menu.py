@@ -20,6 +20,18 @@ def menu():
         "Read Japanese Pages": 100,
         "Japanese Listening": 80,
     }
+    levels = {
+        1: 0,
+        2: 100,
+        3: 250,
+        4: 500,
+        5: 900,
+        6: 1400,
+        7: 2100,
+        8: 3000,
+        9: 4200,
+        10: 6000,
+    }
     format = "%Y-%m-%d %H:%M:%S.%f"
     baza["last save"] = str(datetime.datetime.today())
     date = datetime.datetime.strptime(baza["last save"], format)
@@ -35,6 +47,11 @@ def menu():
         if datetime.datetime.now().hour >= 6 and datetime.datetime.now().day > date.day:
             for i in baza:
                 baza[i] = False
+        for lvl in sorted(levels.keys(), reverse=True):
+            if baza["xp"] >= levels[lvl]:
+                print(f"Level {lvl}")
+                break
+
         for i in baza:
             if i == "last save":
                 continue
@@ -44,6 +61,7 @@ def menu():
                 print(f"[ ] {i}")
             else:
                 print(f"your xp is {baza["xp"]}")
+                print(f"your lvl is {lvl}")
 
         try:
             czyg = int(input("Which did you did?"))
@@ -65,8 +83,6 @@ def menu():
             elif czyg == 6:
                 break
 
-            elif czyg == 6:
-                break
         except ValueError:
             print("Enter a number")
             pass
